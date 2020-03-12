@@ -1,6 +1,6 @@
 const express = require("express");
 const bodyParser = require("body-parser");
-const { getData, addEmail } = require("./mongo-app.js");
+const { getData, addEmail, remove } = require("./mongo-app.js");
 
 const app = express();
 const port = process.env.PORT || 3010;
@@ -15,14 +15,18 @@ app.use((req, res, next) => {
 
 app.get("/data", async (req, res) => {
     const response = await getData();
-    console.log(response);
     res.send({data:response});
   });
 
-app.post("/register", (req, res) => {
-  addEmail(req.body.email);
-  res.send("POST request sent");
+app.get("/add", async (req, res) => {
+  await addEmail(req.query.address)
 });
+
+app.get("/remove", async (req, res) => {
+  await remove(req.query.address)
+});
+
+
 
 app.listen(port, () => {
     console.log(`server is running on ${port}`)

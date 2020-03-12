@@ -1,4 +1,4 @@
-const { MongoClient } = require("mongodb");
+const { MongoClient,ObjectId } = require("mongodb");
 
 const getData = async () => {
   const uri =
@@ -22,7 +22,7 @@ const getData = async () => {
   }
 };
 
-const addEmail = async email => {
+const addEmail = async todo => {
   const uri =
     "mongodb+srv://Mike:%23Asmodii1981@practise-cluster-jdtv7.mongodb.net/test?retryWrites=true&w=majority";
   const client = new MongoClient(uri, {
@@ -33,8 +33,8 @@ const addEmail = async email => {
     await client.connect();
     const db = client.db("joinus");
     await db
-      .collection("emails")
-      .insertOne({ email: email, created_at: new Date() });
+    .collection("to-do")
+    .insertOne({ task: todo});
   } catch (error) {
     console.log(error);
   } finally {
@@ -42,4 +42,25 @@ const addEmail = async email => {
   }
 };
 
-module.exports = { getData, addEmail };
+const remove = async(togo)  => {
+  const uri =
+    "mongodb+srv://Mike:%23Asmodii1981@practise-cluster-jdtv7.mongodb.net/test?retryWrites=true&w=majority";
+  const client = new MongoClient(uri, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+  });
+  const object = JSON.parse(togo)
+  try {
+    await client.connect();
+    const db = client.db("joinus");
+    await db
+    .collection("to-do")
+    .deleteOne({ "_id" : ObjectId(object) });
+  } catch (error) {
+    console.log(error);
+  } finally {
+    await client.close();
+  }
+};
+
+module.exports = { getData, addEmail, remove };
