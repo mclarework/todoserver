@@ -22,7 +22,7 @@ const getData = async () => {
   }
 };
 
-const addEmail = async todo => {
+const addToDo = async todo => {
   const uri =
     "mongodb+srv://Mike:%23Asmodii1981@practise-cluster-jdtv7.mongodb.net/test?retryWrites=true&w=majority";
   const client = new MongoClient(uri, {
@@ -63,4 +63,4 @@ const remove = async(togo)  => {
   }
 };
 
-module.exports = { getData, addEmail, remove };
+module.exports = { getData, addToDo, remove };
