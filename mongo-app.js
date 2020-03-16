@@ -49,13 +49,12 @@ const remove = async(togo)  => {
     useNewUrlParser: true,
     useUnifiedTopology: true
   });
-  const object = JSON.parse(togo)
   try {
     await client.connect();
     const db = client.db("joinus");
     await db
     .collection("to-do")
-    .deleteOne({ "_id" : ObjectId(object) });
+    .deleteOne({ "task" : togo });
   } catch (error) {
     console.log(error);
   } finally {
